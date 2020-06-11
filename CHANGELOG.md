@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Allow manually marking domains for subdomain-level association. This will allow you to keep separate passwords for `site1.example.com` and `site2.example.com` and have them show as such in Autofill.
 - Provide better messages for OpenKeychain errors
 - Rename passwords and categories
+- Allow configuring pull behavior. Head to the Git utils screen to choose from Merge or Rebase strategies.
 
 ### Changed
 - **BREAKING**: Remove support for HOTP/TOTP secrets - Please use FIDO keys or a dedicated app like [Aegis](https://github.com/beemdevelopment/Aegis) or [andOTP](https://github.com/andOTP/andOTP)
