@@ -5,7 +5,6 @@
 package com.zeapo.pwdstore.git
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -32,28 +31,17 @@ class GitAsyncTask(
     activity: Activity,
     private val refreshListOnEnd: Boolean,
     private val operation: GitOperation,
-    private val finishWithResultOnEnd: Intent?,
-    private val silentlyExecute: Boolean = false
+    private val finishWithResultOnEnd: Intent?
 ) : AsyncTask<GitCommand<*>, Int, GitAsyncTask.Result>() {
 
     private val activityWeakReference: WeakReference<Activity> = WeakReference(activity)
     private val activity: Activity?
         get() = activityWeakReference.get()
     private val context: Context = activity.applicationContext
-    private val dialog = ProgressDialog(activity)
 
     sealed class Result {
         object Ok : Result()
         data class Err(val err: Exception) : Result()
-    }
-
-    override fun onPreExecute() {
-        if (silentlyExecute) return
-        dialog.run {
-            setMessage(activity!!.resources.getString(R.string.running_dialog_text))
-            setCancelable(false)
-            show()
-        }
     }
 
     override fun doInBackground(vararg commands: GitCommand<*>): Result? {
@@ -144,7 +132,6 @@ class GitAsyncTask(
     }
 
     override fun onPostExecute(maybeResult: Result?) {
-        if (!silentlyExecute) dialog.dismiss()
         when (val result = maybeResult ?: Result.Err(IOException("Unexpected error"))) {
             is Result.Err -> {
                 if (isExplicitlyUserInitiatedError(result.err)) {

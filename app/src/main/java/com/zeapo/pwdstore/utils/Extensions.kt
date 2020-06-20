@@ -92,7 +92,7 @@ fun Activity.commitChange(message: String, finishWithResultOnEnd: Intent? = null
         override fun execute() {
             d { "Comitting with message: '$message'" }
             val git = Git(repository)
-            val task = GitAsyncTask(this@commitChange, true, this, finishWithResultOnEnd, silentlyExecute = true)
+            val task = GitAsyncTask(this@commitChange, true, this, finishWithResultOnEnd)
             task.execute(
                 git.add().addFilepattern("."),
                 git.commit().setAll(true).setMessage(message)
