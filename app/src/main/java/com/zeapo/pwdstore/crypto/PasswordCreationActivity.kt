@@ -18,7 +18,6 @@ import androidx.lifecycle.lifecycleScope
 import com.github.ajalt.timberkt.e
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zeapo.pwdstore.PasswordEntry
-import com.zeapo.pwdstore.utils.isInsideRepository
 import com.zeapo.pwdstore.R
 import com.zeapo.pwdstore.autofill.oreo.AutofillPreferences
 import com.zeapo.pwdstore.autofill.oreo.DirectoryStructure
@@ -26,7 +25,9 @@ import com.zeapo.pwdstore.databinding.PasswordCreationActivityBinding
 import com.zeapo.pwdstore.ui.dialogs.PasswordGeneratorDialogFragment
 import com.zeapo.pwdstore.ui.dialogs.XkPasswordGeneratorDialogFragment
 import com.zeapo.pwdstore.utils.PasswordRepository
+import com.zeapo.pwdstore.utils.PreferenceKeys
 import com.zeapo.pwdstore.utils.commitChange
+import com.zeapo.pwdstore.utils.isInsideRepository
 import com.zeapo.pwdstore.utils.snackbar
 import com.zeapo.pwdstore.utils.viewBinding
 import kotlinx.coroutines.Dispatchers
@@ -150,7 +151,7 @@ class PasswordCreationActivity : BasePgpActivity(), OpenPgpServiceConnection.OnB
     }
 
     private fun generatePassword() {
-        when (settings.getString("pref_key_pwgen_type", KEY_PWGEN_TYPE_CLASSIC)) {
+        when (settings.getString(PreferenceKeys.PREF_KEY_PWGEN_TYPE, KEY_PWGEN_TYPE_CLASSIC)) {
             KEY_PWGEN_TYPE_CLASSIC -> PasswordGeneratorDialogFragment()
                 .show(supportFragmentManager, "generator")
             KEY_PWGEN_TYPE_XKPASSWD -> XkPasswordGeneratorDialogFragment()
