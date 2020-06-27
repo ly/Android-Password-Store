@@ -655,6 +655,7 @@ class UserPreference : AppCompatActivity() {
                         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
                         prefs.edit { putBoolean("use_generated_key", false) }
+                        getEncryptedPrefs("git_operation").edit { remove("ssh_key_local_passphrase") }
 
                         // Delete the public key from generation
                         File("""$filesDir/.ssh_key.pub""").delete()
@@ -676,7 +677,7 @@ class UserPreference : AppCompatActivity() {
                     // TODO: This is fragile. Workaround until PasswordItem is backed by DocumentFile
                     val docId = DocumentsContract.getTreeDocumentId(uri)
                     val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val path = if (split.isNotEmpty()) split[1] else split[0]
+                    val path = if (split.size > 1) split[1] else split[0]
                     val repoPath = "${Environment.getExternalStorageDirectory()}/$path"
                     val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
