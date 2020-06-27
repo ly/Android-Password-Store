@@ -17,6 +17,7 @@ import com.jcraft.jsch.JSch
 import com.jcraft.jsch.KeyPair
 import com.zeapo.pwdstore.R
 import com.zeapo.pwdstore.databinding.FragmentSshKeygenBinding
+import com.zeapo.pwdstore.utils.PreferenceKeys
 import com.zeapo.pwdstore.utils.getEncryptedPrefs
 import com.zeapo.pwdstore.utils.viewBinding
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +87,7 @@ class SshKeyGenFragment : Fragment(R.layout.fragment_ssh_keygen) {
             val df = ShowSshKeyFragment()
             df.show(requireActivity().supportFragmentManager, "public_key")
             val prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-            prefs.edit { putBoolean("use_generated_key", true) }
+            prefs.edit { putBoolean(PreferenceKeys.USE_GENERATED_KEY, true) }
         } else {
             MaterialAlertDialogBuilder(activity)
                 .setTitle(activity.getString(R.string.error_generate_ssh_key))
